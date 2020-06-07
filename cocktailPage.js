@@ -60,3 +60,22 @@
         
         */
 }
+
+{
+  /* <Text style={styles.text}>Change cocktail to:</Text>
+      <TextInput
+        style={styles.input}
+        placeholder='e.g. Margarita'
+        onChangeText={(text) => changeCocktail(text)}
+        onSubmitEditing={(event) => {
+          onSubmitEdit(event.nativeEvent.text);
+        }}
+      />
+      <TouchableHighlight style={styles.submit} onPress={updateCocktail}>
+        <Text>Press this button to submit editing</Text>
+      </TouchableHighlight>
+      <View style={styles.button}>
+        <Button title='pick random' onPress={randCocktail} />
+      </View>
+      */
+}
