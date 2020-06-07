@@ -106,6 +106,8 @@ export default function App() {
       </View>
       */}
       <Button title='get a cocktails' onPress={aCocktails} />
+      <Picker></Picker>
+
       <ScrollView>
         {cocktailsByLetter.map((cocktail) => {
           return (
