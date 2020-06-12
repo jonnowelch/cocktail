@@ -9,6 +9,8 @@ import {
   TouchableHighlight,
   Alert,
   ScrollView,
+  FlatList,
+  TouchableOpacity,
 } from "react-native";
 import { Picker } from "@react-native-community/picker";
 
@@ -88,11 +90,14 @@ export default function App() {
       );
   };
 
+  const pressHandler = (idDrink) => {
+    console.log(idDrink);
+  };
+
   return (
     <View style={styles.container}>
       <Image source={require("./assets/logo.png")} />
       <Text style={styles.text}>{cocktail.strDrink}</Text>
-
       <Picker
         selectedValue={alphabetLetter}
         style={{ height: 50, width: 100 }}
@@ -137,15 +142,18 @@ export default function App() {
       </Picker>
 
       <Button title='get cocktails' onPress={cocktailByLetter} />
+
       <ScrollView>
         {cocktailsByLetter.map((cocktail) => {
           return (
             <View key={cocktail.idDrink} style={styles.list}>
-              <Text style={styles.title}>{cocktail.strDrink}</Text>
-              <Text>{cocktail.strIngredient1}</Text>
-              <Text>{cocktail.strIngredient2}</Text>
-              <Text>{cocktail.strIngredient3}</Text>
-              <Text>...</Text>
+              <TouchableOpacity onPress={() => pressHandler(cocktail.idDrink)}>
+                <Text style={styles.title}>{cocktail.strDrink}</Text>
+              </TouchableOpacity>
+              <Text style={styles.ingredients}>
+                {cocktail.strIngredient1}, {cocktail.strIngredient2},{" "}
+                {cocktail.strIngredient3} ...
+              </Text>
             </View>
           );
         })}
@@ -183,9 +191,15 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   list: {
-    width: 200,
+    width: 300,
   },
   title: {
     fontWeight: "bold",
+    backgroundColor: "#cdc1c5",
+    width: 500,
+    padding: 5,
+  },
+  ingredients: {
+    backgroundColor: "#EEE0E5",
   },
 });
