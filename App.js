@@ -16,6 +16,8 @@ import {
 } from "react-native";
 import { Picker } from "@react-native-community/picker";
 import Header from "./components/header";
+// import Sandbox from "./components/Sandbox";
+import { ingredientCapitaliser } from "./utils/utils";
 
 export default function App() {
   const [cocktail, setCocktail] = useState([]);
@@ -73,7 +75,6 @@ export default function App() {
     )
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data, "updateCocktailFunction");
         setCocktail(data.drinks[0]);
       })
       .catch((error) =>
@@ -98,11 +99,13 @@ export default function App() {
   };
 
   return (
+    // <Sandbox />
     <TouchableWithoutFeedback
       onPress={() => {
         Keyboard.dismiss();
       }}
     >
+      {/* <ScrollView> */}
       <View style={styles.container}>
         <Header />
         <Text style={styles.text}>{cocktail.strDrink}</Text>
@@ -166,24 +169,28 @@ export default function App() {
 
         <Button title='get cocktails' onPress={cocktailByLetter} />
 
-        <ScrollView>
-          {cocktailsByLetter.map((cocktail) => {
-            return (
-              <View key={cocktail.idDrink} style={styles.list}>
-                <TouchableOpacity
-                  onPress={() => pressHandler(cocktail.idDrink)}
-                >
-                  <Text style={styles.title}>{cocktail.strDrink}</Text>
-                </TouchableOpacity>
-                <Text style={styles.ingredients}>
-                  {cocktail.strIngredient1}, {cocktail.strIngredient2},{" "}
-                  {cocktail.strIngredient3} ...
-                </Text>
-              </View>
-            );
-          })}
-        </ScrollView>
+        <View style={styles.content}>
+          <ScrollView>
+            {cocktailsByLetter.map((cocktail) => {
+              return (
+                <View key={cocktail.idDrink} style={styles.list}>
+                  <TouchableOpacity
+                    onPress={() => pressHandler(cocktail.idDrink)}
+                  >
+                    <Text style={styles.title}>{cocktail.strDrink}</Text>
+                  </TouchableOpacity>
+                  <Text style={styles.ingredients}>
+                    {ingredientCapitaliser(cocktail.strIngredient1)},{" "}
+                    {ingredientCapitaliser(cocktail.strIngredient2)},{" "}
+                    {ingredientCapitaliser(cocktail.strIngredient3)} ...
+                  </Text>
+                </View>
+              );
+            })}
+          </ScrollView>
+        </View>
       </View>
+      {/* </ScrollView> */}
     </TouchableWithoutFeedback>
   );
 }
@@ -194,6 +201,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     color: "white",
+    // backgroundColor: "grey",
   },
   text: {
     paddingHorizontal: 30,
@@ -216,8 +224,13 @@ const styles = StyleSheet.create({
   button: {
     padding: 10,
   },
+  content: {
+    flex: 0.8,
+  },
+
   list: {
     width: 300,
+    flex: 1,
   },
   title: {
     fontWeight: "bold",
@@ -227,5 +240,6 @@ const styles = StyleSheet.create({
   },
   ingredients: {
     backgroundColor: "#EEE0E5",
+    paddingLeft: 5,
   },
 });
