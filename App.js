@@ -11,8 +11,11 @@ import {
   ScrollView,
   FlatList,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import { Picker } from "@react-native-community/picker";
+import Header from "./components/header";
 
 export default function App() {
   const [cocktail, setCocktail] = useState([]);
@@ -95,70 +98,93 @@ export default function App() {
   };
 
   return (
-    <View style={styles.container}>
-      <Image source={require("./assets/logo.png")} />
-      <Text style={styles.text}>{cocktail.strDrink}</Text>
-      <Picker
-        selectedValue={alphabetLetter}
-        style={{ height: 50, width: 100 }}
-        onValueChange={(itemValue, itemIndex) => setLetter(itemValue)}
-      >
-        <Picker.Item label='A' value='a' />
-        <Picker.Item label='B' value='b' />
-        <Picker.Item label='C' value='c' />
-        <Picker.Item label='D' value='d' />
-        <Picker.Item label='E' value='e' />
-        <Picker.Item label='F' value='f' />
-        <Picker.Item label='G' value='g' />
-        <Picker.Item label='H' value='h' />
-        <Picker.Item label='I' value='i' />
-        <Picker.Item label='J' value='j' />
-        <Picker.Item label='K' value='k' />
-        <Picker.Item label='L' value='l' />
-        <Picker.Item label='M' value='m' />
-        <Picker.Item label='N' value='n' />
-        <Picker.Item label='O' value='o' />
-        <Picker.Item label='P' value='p' />
-        <Picker.Item label='Q' value='q' />
-        <Picker.Item label='R' value='r' />
-        <Picker.Item label='S' value='s' />
-        <Picker.Item label='T' value='t' />
-        <Picker.Item label='U' value='u' />
-        <Picker.Item label='V' value='y' />
-        <Picker.Item label='W' value='w' />
-        <Picker.Item label='X' value='x' />
-        <Picker.Item label='Y' value='y' />
-        <Picker.Item label='Z' value='z' />
-        <Picker.Item label='0' value='0' />
-        <Picker.Item label='1' value='1' />
-        <Picker.Item label='2' value='2' />
-        <Picker.Item label='3' value='3' />
-        <Picker.Item label='4' value='4' />
-        <Picker.Item label='5' value='5' />
-        <Picker.Item label='6' value='6' />
-        <Picker.Item label='7' value='7' />
-        <Picker.Item label='8' value='8' />
-        <Picker.Item label='9' value='9' />
-      </Picker>
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss();
+      }}
+    >
+      <View style={styles.container}>
+        <Header />
+        <Text style={styles.text}>{cocktail.strDrink}</Text>
+        <Text style={styles.text}>Change cocktail to:</Text>
+        <TextInput
+          style={styles.input}
+          placeholder='e.g. Margarita'
+          onChangeText={(text) => changeCocktail(text)}
+          onSubmitEditing={(event) => {
+            onSubmitEdit(event.nativeEvent.text);
+          }}
+        />
+        <TouchableHighlight style={styles.submit} onPress={updateCocktail}>
+          <Text>Press this button to submit editing</Text>
+        </TouchableHighlight>
+        <View style={styles.button}>
+          <Button title='pick random' onPress={randCocktail} />
+        </View>
+        <Picker
+          selectedValue={alphabetLetter}
+          style={{ height: 50, width: 100 }}
+          onValueChange={(itemValue, itemIndex) => setLetter(itemValue)}
+        >
+          <Picker.Item label='A' value='a' />
+          <Picker.Item label='B' value='b' />
+          <Picker.Item label='C' value='c' />
+          <Picker.Item label='D' value='d' />
+          <Picker.Item label='E' value='e' />
+          <Picker.Item label='F' value='f' />
+          <Picker.Item label='G' value='g' />
+          <Picker.Item label='H' value='h' />
+          <Picker.Item label='I' value='i' />
+          <Picker.Item label='J' value='j' />
+          <Picker.Item label='K' value='k' />
+          <Picker.Item label='L' value='l' />
+          <Picker.Item label='M' value='m' />
+          <Picker.Item label='N' value='n' />
+          <Picker.Item label='O' value='o' />
+          <Picker.Item label='P' value='p' />
+          <Picker.Item label='Q' value='q' />
+          <Picker.Item label='R' value='r' />
+          <Picker.Item label='S' value='s' />
+          <Picker.Item label='T' value='t' />
+          <Picker.Item label='U' value='u' />
+          <Picker.Item label='V' value='y' />
+          <Picker.Item label='W' value='w' />
+          <Picker.Item label='X' value='x' />
+          <Picker.Item label='Y' value='y' />
+          <Picker.Item label='Z' value='z' />
+          <Picker.Item label='0' value='0' />
+          <Picker.Item label='1' value='1' />
+          <Picker.Item label='2' value='2' />
+          <Picker.Item label='3' value='3' />
+          <Picker.Item label='4' value='4' />
+          <Picker.Item label='5' value='5' />
+          <Picker.Item label='6' value='6' />
+          <Picker.Item label='7' value='7' />
+          <Picker.Item label='8' value='8' />
+          <Picker.Item label='9' value='9' />
+        </Picker>
 
-      <Button title='get cocktails' onPress={cocktailByLetter} />
+        <Button title='get cocktails' onPress={cocktailByLetter} />
 
-      <ScrollView>
-        {cocktailsByLetter.map((cocktail) => {
-          return (
-            <View key={cocktail.idDrink} style={styles.list}>
-              <TouchableOpacity onPress={() => pressHandler(cocktail.idDrink)}>
-                <Text style={styles.title}>{cocktail.strDrink}</Text>
-              </TouchableOpacity>
-              <Text style={styles.ingredients}>
-                {cocktail.strIngredient1}, {cocktail.strIngredient2},{" "}
-                {cocktail.strIngredient3} ...
-              </Text>
-            </View>
-          );
-        })}
-      </ScrollView>
-    </View>
+        <ScrollView>
+          {cocktailsByLetter.map((cocktail) => {
+            return (
+              <View key={cocktail.idDrink} style={styles.list}>
+                <TouchableOpacity
+                  onPress={() => pressHandler(cocktail.idDrink)}
+                >
+                  <Text style={styles.title}>{cocktail.strDrink}</Text>
+                </TouchableOpacity>
+                <Text style={styles.ingredients}>
+                  {cocktail.strIngredient1}, {cocktail.strIngredient2},{" "}
+                  {cocktail.strIngredient3} ...
+                </Text>
+              </View>
+            );
+          })}
+        </ScrollView>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 
