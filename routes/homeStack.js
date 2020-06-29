@@ -3,6 +3,7 @@ import { createAppContainer } from "react-navigation";
 import Home from "../screens/home";
 import About from "../screens/about";
 import Cocktail from "../screens/cocktailPage";
+import IngredientInfo from "../screens/ingredientInfo";
 
 const screens = {
   Home: {
@@ -13,6 +14,9 @@ const screens = {
   },
   Cocktail: {
     screen: Cocktail,
+  },
+  IngredientInfo: {
+    screen: IngredientInfo,
   },
 };
 

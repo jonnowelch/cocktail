@@ -1,4 +1,4 @@
-const { ingredientCapitaliser } = require("./utils");
+const { ingredientCapitaliser, replaceSpace } = require("./utils");
 const { expect } = require("chai");
 
 describe("ingredientCapitaliser", () => {
@@ -28,6 +28,25 @@ describe("ingredientCapitaliser", () => {
     const input = "151 proof rum";
     const actual = ingredientCapitaliser(input);
     const expected = "151 Proof Rum";
+    expect(actual).to.equal(expected);
+  });
+});
+
+describe("replaceSpace", () => {
+  it("returns a string", () => {
+    const actual = replaceSpace("");
+    expect(actual).to.be.a("string");
+  });
+  it("replaces an empty space with a _", () => {
+    const input = " ";
+    const actual = replaceSpace(input);
+    const expected = "_";
+    expect(actual).to.equal(expected);
+  });
+  it("replaces spaces with underscore between words", () => {
+    const input = "light rum";
+    const actual = replaceSpace(input);
+    const expected = "light_rum";
     expect(actual).to.equal(expected);
   });
 });

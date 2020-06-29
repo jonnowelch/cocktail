@@ -10,6 +10,11 @@ ingredientCapitaliser = (ingredients) => {
   }
 };
 
+replaceSpace = (string) => {
+  return string.split(" ").join("_");
+};
+
 module.exports = {
   ingredientCapitaliser,
+  replaceSpace,
 };
